@@ -1,6 +1,7 @@
 {% extends 'recipe.html' %}
 
 {% block data %}
+    <h2>Brew parameters</h2>
     <form method="POST" action="/brew/create">
 
         <input type="hidden" value="{{ recipe.id }}" name="recipe_id">
