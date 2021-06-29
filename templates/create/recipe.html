@@ -5,7 +5,7 @@
     <div class="col-md-12">
         <form method="POST" action="/recipe/create">
             <h1>Create recipe</h1>
-            <input type="text" name="name" placeholder="Name..." class="form-control form-control-lg">
+            <input type="text" name="name" placeholder="Name..." class="form-control form-control-lg" required>
             <h2>Ingredients</h2>
             <input type="hidden" id="no_hops" name="no_hops" value="1">
             <input type="hidden" id="no_mash" name="no_mash" value="1">
@@ -25,13 +25,13 @@
                         <tbody id="hops">
                             <tr>
                                 <td>
-                                    <input type="text" name="hop[]" placeholder="E.g Citra" class="form-control form-control-sm">
+                                    <input type="text" name="hop[]" placeholder="E.g Citra" class="form-control form-control-sm" required>
                                 </td>
                                 <td>
-                                    <input type="text" name="hop_amount[]" placeholder="00" class="form-control form-control-sm">
+                                    <input type="text" name="hop_amount[]" placeholder="00" class="form-control form-control-sm" required>
                                 </td>
                                 <td>
-                                    <input type="text" name="hop_boil[]" placeholder="60" class="form-control form-control-sm">
+                                    <input type="text" name="hop_boil[]" placeholder="60" class="form-control form-control-sm" required>
                                 </td>
                             </tr>
                         </tbody>
@@ -50,10 +50,10 @@
                         <tbody id="malts">
                         <tr>
                             <td>
-                                <input type="text" name="malt[]" placeholder="E.g Pale Ale Malt" class="form-control form-control-sm">
+                                <input type="text" name="malt[]" placeholder="E.g Pale Ale Malt" class="form-control form-control-sm" required>
                             </td>
                             <td>
-                                <input type="text" name="malt_amount[]" placeholder="00" step="0.01" class="form-control form-control-sm">
+                                <input type="text" name="malt_amount[]" placeholder="00" step="0.01" class="form-control form-control-sm" required>
                             </td>
                         </tr>
 
@@ -75,13 +75,13 @@
                         <tbody id="mash">
                             <tr>
                                 <td>
-                                    <input type="text" name="mash[]" placeholder="E.g Mash in" class="form-control form-control-sm">
+                                    <input type="text" name="mash[]" placeholder="E.g Mash in" class="form-control form-control-sm" required>
                                 </td>
                                 <td>
-                                    <input type="number" name="mash_temp[]" placeholder="00" class="form-control form-control-sm">
+                                    <input type="number" name="mash_temp[]" placeholder="00" class="form-control form-control-sm" required>
                                 </td>
                                 <td>
-                                    <input type="number" name="mash_duration[]" placeholder="00" class="form-control form-control-sm">
+                                    <input type="number" name="mash_duration[]" placeholder="00" class="form-control form-control-sm" required>
                                 </td>
                             </tr>
                         </tbody>
@@ -96,7 +96,7 @@
                                     <label>Estimated volume before boiling</label>
                                 </td>
                                 <td>
-                                    <input type="number" name="before_boil" placeholder="E.g 25L" class="form-control">
+                                    <input type="number" name="before_boil" placeholder="E.g 25L" class="form-control" required>
                                 </td>
                             </tr>
                             <tr>
@@ -104,7 +104,7 @@
                                     <label>Yeast</label>
                                 </td>
                                 <td>
-                                    <input type="text" name="yeast" placeholder="Fermentis Safale US-05" class="form-control">
+                                    <input type="text" name="yeast" placeholder="Fermentis Safale US-05" class="form-control" required>
                                 </td>
                             </tr>
                         </tbody>
@@ -129,17 +129,17 @@
 
     $(document).ready(function() {
         $("#add_hop").click(function() {
-            $("#hops").append("<tr><td><input type='text' name='hop[]' placeholder='E.g Citra' class='form-control form-control-sm'></td><td><input type='number' name='hop_amount[]' placeholder='00' class='form-control form-control-sm'></td><td><input type='number' name='hop_boil[]' placeholder='60' class='form-control form-control-sm'></td></tr>");
+            $("#hops").append("<tr><td><input type='text' name='hop[]' placeholder='E.g Citra' class='form-control form-control-sm' required></td><td><input type='number' name='hop_amount[]' placeholder='00' class='form-control form-control-sm' required></td><td><input type='number' name='hop_boil[]' placeholder='60' class='form-control form-control-sm' required></td></tr>");
             $("#no_hops").val(++no_hops);
         });
 
         $("#add_malt").click(function() {
-            $("#malts").append("<tr><td><input type='text' name='malt[]' placeholder='E.g Pale Ale malt' class='form-control form-control-sm'></td><td><input type='number' name='malt_amount[]' placeholder='0' step='0.01' class='form-control form-control-sm'></td></tr>");
+            $("#malts").append("<tr><td><input type='text' name='malt[]' placeholder='E.g Pale Ale malt' class='form-control form-control-sm' required></td><td><input type='number' name='malt_amount[]' placeholder='0' step='0.01' class='form-control form-control-sm' required></td></tr>");
             $("#no_malts").val(++no_malts);
         });
 
         $("#add_mash").click(function() {
-            $("#mash").append("<tr><td><input type='text' name='mash[]' placeholder='E.g Mash in' class='form-control form-control-sm'></td><td><input type='number' name='mash_temp[]' placeholder='00' class='form-control form-control-sm'></td><td><input type='number' name='mash_duration[]' placeholder='00' class='form-control form-control-sm'></td></tr>");
+            $("#mash").append("<tr><td><input type='text' name='mash[]' placeholder='E.g Mash in' class='form-control form-control-sm' required></td><td><input type='number' name='mash_temp[]' placeholder='00' class='form-control form-control-sm' required></td><td><input type='number' name='mash_duration[]' placeholder='00' class='form-control form-control-sm' required></td></tr>");
             $("#no_mash").val(++no_mash);
         });
     });
