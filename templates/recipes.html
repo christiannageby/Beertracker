@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-10">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% if recipes|length < 1 %}
+          <tr>
+            <td>No recipes found, you can create one by pressing the Create Recipe link in the top bar.</td>
+          </tr>
+        {% else %}
+          {% for recipe in recipes %}
+          <tr>
+            <td><a href="/recipe/{{ recipe.id }}">{{ recipe.name }}</a></td>
+            <td>
+              <a class="btn btn-success btn-sm" href="/recipe/{{ recipe.id }}">View</a>
+              <a class="btn btn-primary btn-sm" href="/brew/recipe/{{ recipe.id }}">Brew</a>
+            </td>
+          </tr>
+          {% endfor %}
+        {% endif %}
+        </tbody>
+      </table>
+    </div>
+</div>
+{% endblock content %}

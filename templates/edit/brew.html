@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1>Editing {{ recipe.name }} #{{ brew.id }}</h1>
+
+        <form action="/brew/edit" method="POST">
+            <input type="hidden" value="{{ brew.id }}" name="brew_id">
+
+            <div class="form-group">
+                <label>Recipe <i class="bi bi-question-circle" data-container="body" data-toggle="popover" data-placement="right" data-content="You can't change this here, the brew has already been made!"></i></label>
+                <input type="text" class="form-control" value="{{ recipe.name }}" disabled data-toggle="popover">
+            </div>
+
+            <div class="form-group">
+                <label for="brew_day">Brew day</label>
+                <input type="date" class="form-control" name="brew_day" value="{{ brew.brew_day }}">
+            </div>
+
+            <div class="form-group">
+                <label for="brew_og">Brew OG</label>
+                <input type="number" class="form-control" name="brew_og" placeholder="e.g 50" value="{{ brew.brew_og }}">
+            </div>
+
+            <div class="form-group">
+                <label for="brew_fg">Brew FG</label>
+                <input type="number" class="form-control" name="brew_fg" placeholder="e.g 10" value="{{ brew.brew_fg }}">
+            </div>
+
+            <div class="form-group">
+                <label for="brew_done_fermenting">Done Fermenting</label>
+                <input type="date" class="form-control" name="brew_done_ferm" value="{{ brew.brew_done_ferm }}">
+            </div>
+
+            <div class="form-group">
+                <label for="brew_comment">Comments</label>
+                <textarea class="form-control" name="brew_comment" {% if brew.brew_comment %} value="{{ brew.brew_comment }}" {% else %} placeholder="Write your comment here..." {% endif %}></textarea>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary form-control" name="submit">
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <h1>{{ recipe.name }}</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Ingredients</h2>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Hops</h3>
+                        <table class="table table-striped">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th>Hop</th>
+                                <th>Amount</th>
+                                <th>Boil time</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for hop in recipe.hops %}
+                            <tr>
+                                <td>{{ hop.name }}</td>
+                                <td>{{ hop.amount }} g</td>
+                                <td>{{ hop.boil }} minutes</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="col-md-12">
+                        <h3>Malts</h3>
+                        <table class="table table-striped">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th>Name</th>
+                                <th>Amount</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for malt in recipe.malt %}
+                            <tr>
+                                <td>{{ malt.name }}</td>
+                                <td>{{ malt.amount }} kg</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="col-md-12">
+                        <h3>Mashing</h3>
+                        <table class="table table-striped">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th>Stage</th>
+                                <th>Temperature</th>
+                                <th>Duration</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for mash in recipe.mash %}
+                            <tr>
+                                <td>{{ mash.name }}</td>
+                                <td>{{ mash.temp }} °C</td>
+                                <td>{{ mash.duration }}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <h2>Other Information</h2>
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <b>Yeast used:</b>
+                            </td>
+                            <td>
+                                {{ recipe.yeast }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>Recommended volume of wort before boil:</b>
+                            </td>
+                            <td>
+                                {{ recipe.before_boil }} L
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                {% if recipe.other %}
+                    <h3>Brewers comments</h3>
+                    <br>
+                    <div>
+                        {{ recipe.other }}
+                    </div>
+                {% endif %}
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Bryggparametrar</h2>
+                {% block data %}{% endblock data %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

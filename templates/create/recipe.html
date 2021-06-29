@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <form method="POST" action="/recipe/create">
+            <h1>Create recipe</h1>
+            <input type="text" name="name" placeholder="Name..." class="form-control form-control-lg">
+            <h2>Ingredients</h2>
+            <input type="hidden" id="no_hops" name="no_hops" value="1">
+            <input type="hidden" id="no_mash" name="no_mash" value="1">
+            <input type="hidden" id="no_malts" name="no_malts" value="1">
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>Hops</h3>
+                    <table class="table table-striped">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Hop</th>
+                                <th>Amount</th>
+                                <th>Boil time </th>
+                                <th><i class="bi bi-plus-circle" id="add_hop"></i></th>
+                            </tr>
+                            </thead>
+                        <tbody id="hops">
+                            <tr>
+                                <td>
+                                    <input type="text" name="hop[]" placeholder="E.g Citra" class="form-control form-control-sm">
+                                </td>
+                                <td>
+                                    <input type="text" name="hop_amount[]" placeholder="00" class="form-control form-control-sm">
+                                </td>
+                                <td>
+                                    <input type="text" name="hop_boil[]" placeholder="60" class="form-control form-control-sm">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-12">
+                    <h3>Malts</h3>
+                    <table class="table table-striped">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>Name</th>
+                            <th>Amount</th>
+                            <th><i class="bi bi-plus-circle" id="add_malt"></i></th>
+                        </tr>
+                        </thead>
+                        <tbody id="malts">
+                        <tr>
+                            <td>
+                                <input type="text" name="malt[]" placeholder="E.g Pale Ale Malt" class="form-control form-control-sm">
+                            </td>
+                            <td>
+                                <input type="text" name="malt_amount[]" placeholder="00" step="0.01" class="form-control form-control-sm">
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-md-12">
+                    <h3>Mashing</h3>
+                    <table class="table table-striped">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>Stage</th>
+                            <th>Temperature</th>
+                            <th>Duration</th>
+                            <th><i class="bi bi-plus-circle" id="add_mash"></i></th>
+                        </tr>
+                        </thead>
+                        <tbody id="mash">
+                            <tr>
+                                <td>
+                                    <input type="text" name="mash[]" placeholder="E.g Mash in" class="form-control form-control-sm">
+                                </td>
+                                <td>
+                                    <input type="number" name="mash_temp[]" placeholder="00" class="form-control form-control-sm">
+                                </td>
+                                <td>
+                                    <input type="number" name="mash_duration[]" placeholder="00" class="form-control form-control-sm">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-12">
+                    <h2>Other Parameters</h2>
+                    <table class="table table-striped">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label>Estimated volume before boiling</label>
+                                </td>
+                                <td>
+                                    <input type="number" name="before_boil" placeholder="E.g 25L" class="form-control">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label>Yeast</label>
+                                </td>
+                                <td>
+                                    <input type="text" name="yeast" placeholder="Fermentis Safale US-05" class="form-control">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <textarea name="other" placeholder="Anything other?" class="form-control"></textarea>
+                <br>
+            </div>
+            <div class="col-md-12">
+                <input type="submit" class="btn btn-lg btn-success">
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    var no_hops = 1;
+    var no_malts = 1;
+    var no_mash = 1;
+
+    $(document).ready(function() {
+        $("#add_hop").click(function() {
+            $("#hops").append("<tr><td><input type='text' name='hop[]' placeholder='E.g Citra' class='form-control form-control-sm'></td><td><input type='number' name='hop_amount[]' placeholder='00' class='form-control form-control-sm'></td><td><input type='number' name='hop_boil[]' placeholder='60' class='form-control form-control-sm'></td></tr>");
+            $("#no_hops").val(++no_hops);
+        });
+
+        $("#add_malt").click(function() {
+            $("#malts").append("<tr><td><input type='text' name='malt[]' placeholder='E.g Pale Ale malt' class='form-control form-control-sm'></td><td><input type='number' name='malt_amount[]' placeholder='0' step='0.01' class='form-control form-control-sm'></td></tr>");
+            $("#no_malts").val(++no_malts);
+        });
+
+        $("#add_mash").click(function() {
+            $("#mash").append("<tr><td><input type='text' name='mash[]' placeholder='E.g Mash in' class='form-control form-control-sm'></td><td><input type='number' name='mash_temp[]' placeholder='00' class='form-control form-control-sm'></td><td><input type='number' name='mash_duration[]' placeholder='00' class='form-control form-control-sm'></td></tr>");
+            $("#no_mash").val(++no_mash);
+        });
+    });
+</script>
+{% endblock content %}
