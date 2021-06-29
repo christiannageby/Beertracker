@@ -1,3 +1,5 @@
+.idea/
+__pychache__/
 config.py
 recept.txt
 test.db
