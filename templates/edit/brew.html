@@ -35,7 +35,7 @@
 
             <div class="form-group">
                 <label for="brew_comment">Comments</label>
-                <textarea class="form-control" name="brew_comment" {% if brew.brew_comment %} value="{{ brew.brew_comment }}" {% else %} placeholder="Write your comment here..." {% endif %}></textarea>
+                <textarea class="form-control" name="brew_comment">{{ brew.brew_comment }}</textarea>
             </div>
 
             <div class="form-group">
