@@ -117,7 +117,7 @@ def recipe(id):
 @app.route('/brew/recipe/<int:id>')
 def brew_recipe(id):
     recipe = Recipe.query.get_or_404(id)
-    return render_template('brew.html', recipe=recipe)
+    return render_template('create/brew.html', recipe=recipe)
 
 
 @app.route('/brew/create', methods=['POST'])
