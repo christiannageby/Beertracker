@@ -1,4 +1,4 @@
-# Beertracker 1.0
+# Beertracker 2.0
 This is a simple webapp for keeping track of your homebrewed beer.
 The Beertracker 2.0 originated from a Google Spreadsheets document which wasn't sufficient for keeping track of multiple recipes.
 
