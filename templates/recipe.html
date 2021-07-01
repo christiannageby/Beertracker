@@ -8,6 +8,51 @@
             <div class="col-md-6">
                 <h2>Ingredients</h2>
                 <div class="row">
+
+                    <div class="col-md-12">
+                        <h3>Malts</h3>
+
+                        <table class="table table-striped">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th>Name</th>
+                                <th>Amount</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for malt in recipe.malt %}
+                            <tr>
+                                <td>{{ malt.name }}</td>
+                                <td>{{ malt.amount }} kg</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                    <div class="col-md-12">
+                        <h3>Mashing</h3>
+                        <table class="table table-striped">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Stage</th>
+                                    <th>Temperature</th>
+                                    <th>Duration</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for mash in recipe.mash %}
+                            <tr>
+                                <td>{{ mash.name }}</td>
+                                <td>{{ mash.temp }} °C</td>
+                                <td>{{ mash.duration }} minutes</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
                     <div class="col-md-12">
                         <h3>Hops</h3>
                         <table class="table table-striped">
@@ -31,48 +76,6 @@
                     </div>
 
                     <div class="col-md-12">
-                        <h3>Malts</h3>
-                        <table class="table table-striped">
-                            <thead class="thead-dark">
-                            <tr>
-                                <th>Name</th>
-                                <th>Amount</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for malt in recipe.malt %}
-                            <tr>
-                                <td>{{ malt.name }}</td>
-                                <td>{{ malt.amount }} kg</td>
-                            </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="col-md-12">
-                        <h3>Mashing</h3>
-                        <table class="table table-striped">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th>Stage</th>
-                                    <th>Temperature</th>
-                                    <th>Duration</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            {% for mash in recipe.mash %}
-                            <tr>
-                                <td>{{ mash.name }}</td>
-                                <td>{{ mash.temp }} °C</td>
-                                <td>{{ mash.duration }}</td>
-                            </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="col-md-12">
                         <h3>Other</h3>
                         <table class="table table-striped">
                             <thead class="thead-dark">
@@ -83,11 +86,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                            {% for r in recipe.other %}
+                            {% for other in recipe.other %}
                                 <tr>
-                                    <td>{{ r.name }}</td>
-                                    <td>{{ r.amount }}</td>
-                                    <td>{{ r.time }}</td>
+                                    <td>{{ other.name }}</td>
+                                    <td>{{ other.amount }}</td>
+                                    <td>{{ other.time }}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>
@@ -103,20 +106,12 @@
                 <table class="table table-striped">
                     <tbody>
                         <tr>
-                            <td>
-                                <b>Yeast used:</b>
-                            </td>
-                            <td>
-                                {{ recipe.yeast }}
-                            </td>
+                            <td><b>Yeast used:</b></td>
+                            <td>{{ recipe.yeast }}</td>
                         </tr>
                         <tr>
-                            <td>
-                                <b>Recommended volume of wort before boil:</b>
-                            </td>
-                            <td>
-                                {{ recipe.before_boil }} L
-                            </td>
+                            <td><b>Recommended volume of wort before boil:</b></td>
+                            <td>{{ recipe.before_boil }} L</td>
                         </tr>
 
                         <tr>
@@ -139,21 +134,20 @@
                 {% if recipe.comment %}
                     <h3>Brewers comments</h3>
                     <br>
-                    <div>
-                        {{ recipe.comment }}
-                    </div>
+                    <div>{{ recipe.comment }}</div>
                 {% endif %}
 
                 {% block data %}
-                <h3>Actions</h3>
-                <button class="btn btn-md btn-primary">Export recipe as PDF</button>
-                <button class="btn btn-md btn-success">Review recipe</button>
-                <button class="btn btn-md btn-warning">Edit recipe</button>
-                <button class="btn btn-md btn-danger">Delete recipe</button>
+                    <h3>Actions</h3>
+                    <button class="btn btn-md btn-primary">Export recipe as PDF</button>
+                    <button class="btn btn-md btn-success">Review recipe</button>
+                    <button class="btn btn-md btn-warning">Edit recipe</button>
+                    <button class="btn btn-md btn-danger">Delete recipe</button>
                 {% endblock data %}
 
             </div>
         </div>
     </div>
 </div>
+
 {% endblock content %}
