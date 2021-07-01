@@ -15,12 +15,12 @@
           </tr>
         </thead>
         <tbody>
-        {% if recipes|length < 1 %}
+        {% if recipes.items|length < 1 %}
           <tr>
             <td>No recipes found, you can create one by pressing the Create Recipe link in the top bar.</td>
           </tr>
         {% else %}
-          {% for recipe in recipes %}
+          {% for recipe in recipes.items %}
           <tr>
             <td><a href="/recipe/{{ recipe.id }}">{{ recipe.name }}</a></td>
             <td>{{ recipe.before_boil }}</td>
@@ -36,6 +36,21 @@
         {% endif %}
         </tbody>
       </table>
+      <div class="row">
+        <nav aria-label="Pagination" class="pull-right">
+          <ul class="pagination">
+              <li class="page-item"><a class="page-link {% if recipes.page == 1 %}disabled{% endif %}" href="{{ url_for('recipes', page=recipes.prev_num) }}">Previous</a></li>
+              {% for page_num in recipes.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                {% if page_num  %}
+                    <li class="page-item"><a class="page-link" href="{{ url_for('recipes', page=page_num) }}">{{ page_num }}</a></li>
+                {% else %}
+                  <li class="page-item active"><a class="page-link" href="{{ url_for('recipes', page=page_num) }}">{{ page_num }}</a></li>
+                {% endif %}
+              {% endfor %}
+            <li class="page-item"><a class="page-link {% if recipes.page == recipes.pages %}disabled{% endif %}" href="{{ url_for('recipes', page=recipes.next_num) }}">Next</a></li>
+          </ul>
+        </nav>
+      </div>
     </div>
 </div>
 {% endblock content %}
