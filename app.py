@@ -55,12 +55,12 @@ def delete_recipe(id):
 
 
 @app.route('/recipe/create', methods=['GET'])
-def create_recipe():
+def create_recipe() -> render_template:
     return render_template('create/recipe.html')
 
 
 @app.route('/recipe/create', methods=['POST'])
-def add_recipe():
+def add_recipe() -> redirect:
     hops = []
     no_hops = int(request.form.get('no_hops'))
     hop_names = request.form.getlist('hop[]')
@@ -128,19 +128,19 @@ def add_recipe():
 
 
 @app.route('/recipe/<int:id>')
-def recipe(id):
+def recipe(id) -> render_template:
     recipe = Recipe.query.get_or_404(id)
     return render_template('recipe.html', recipe=recipe)
 
 
 @app.route('/brew/recipe/<int:id>')
-def brew_recipe(id):
+def brew_recipe(id) -> render_template:
     recipe = Recipe.query.get_or_404(id)
     return render_template('create/brew.html', recipe=recipe)
 
 
 @app.route('/brew/create', methods=['POST'])
-def add_brew():
+def add_brew() -> redirect:
     if request.method == 'POST':
         recipe_id = request.form['recipe_id']
         brew_day = datetime.strptime(request.form['brew_day'], '%Y-%m-%d')
@@ -161,14 +161,14 @@ def add_brew():
 
 
 @app.route('/brew/edit/<int:id>')
-def edit_brew(id):
+def edit_brew(id) -> render_template:
     brew = Brew.query.get_or_404(id)
     recipe = Recipe.query.get_or_404(brew.recipe_id)
     return render_template('edit/brew.html', brew=brew, recipe=recipe)
 
 
 @app.route('/brew/edit', methods=['POST'])
-def modify_brew():
+def modify_brew() -> redirect:
     if request.method == 'POST':
         brew_id = request.form['brew_id']
         brew_og = request.form['brew_og']
@@ -193,7 +193,7 @@ def modify_brew():
 
 @app.route('/')
 @app.route('/brews')
-def brews():
+def brews() -> render_template:
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 10, type=int)
     brews = db.session.query(Brew, Recipe).join(Recipe).filter(Brew.recipe_id == Recipe.id).order_by(
