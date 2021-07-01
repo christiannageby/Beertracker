@@ -35,7 +35,7 @@
           {% for recipe in recipes.items %}
             <tr>
               <td><a href="/recipe/{{ recipe.id }}">{{ recipe.name }}</a></td>
-              <td>{{ recipe.before_boil }}</td>
+              <td>{{ recipe.before_boil }} L</td>
               <td>{{ recipe.estimated_og }}</td>
               <td>{{ recipe.estimated_fg }}</td>
               <td>{{ ((recipe.estimated_og - recipe.estimated_fg) / 7.62) | round(2) }}%</td>
