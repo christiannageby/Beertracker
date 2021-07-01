@@ -13,12 +13,15 @@ db = SQLAlchemy(app)
 class Recipe(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
+    estimated_og = db.Column(db.Integer, nullable=False)
+    estimated_fg = db.Column(db.Integer, nullable=True)
     malt = db.Column(db.JSON(), nullable=False)
     hops = db.Column(db.JSON(), nullable=False)
     mash = db.Column(db.JSON(), nullable=False)
+    other = db.Column(db.JSON(), nullable=True)
     before_boil = db.Column(db.Integer, nullable=False)
     yeast = db.Column(db.String(255), nullable=False)
-    other = db.Column(db.Text)
+    comment = db.Column(db.Text)
 
 
 class Brew(db.Model):
@@ -76,29 +79,43 @@ def add_recipe():
     mash_durations = request.form.getlist('mash_duration[]')
     mash_ok = no_mash == len(mash_stages) and no_mash == len(mash_temps) and no_mash == len(mash_durations)
 
+    other = []
+    no_other = int(request.form.get('no_other'))
+    other_name = request.form.getlist('other_name[]')
+    other_amount = request.form.getlist('other_amount[]')
+    other_time = request.form.getlist('other_time[]')
+    other_ok = no_other == len(other_name) and no_other == len(other_amount) and no_other == len(other_name)
+
     before_boil = request.form.get('before_boil')
+    estimated_og = request.form.get('estimated_og')
+    estimated_fg = request.form.get('estimated_fg')
     name = request.form.get('name')
     yeast = request.form.get('yeast')
-    other = request.form.get('other')
+    comment = request.form.get('comment')
 
-    if hops_ok and malts_ok and mash_ok:
+    if hops_ok and malts_ok and mash_ok and other_ok:
         for i in range(no_hops):
             hops.append({"name": hop_names[i], "amount": hop_amount[i], "boil": hop_boil[i]})
         for i in range(no_malt):
             malt.append({"name": malt_names[i], "amount": malt_amount[i]})
         for i in range(no_mash):
             mash.append({"name": mash_stages[i], "temp": mash_temps[i], "duration": mash_durations[i]})
+        for i in range(no_other):
+            other.append({"name": other_name[i], "amount": other_amount[i], "time": other_time[i]})
+
 
     try:
-        print(request.form)
         new_recipe = Recipe(
             name=name,
             before_boil=before_boil,
             mash=mash,
+            estimated_fg=estimated_fg,
+            estimated_og=estimated_og,
             hops=hops,
             malt=malt,
             yeast=yeast,
-            other=other
+            other=other,
+            comment=comment
         )
         db.session.add(new_recipe)
         db.session.commit()

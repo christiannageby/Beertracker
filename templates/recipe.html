@@ -54,11 +54,11 @@
                         <h3>Mashing</h3>
                         <table class="table table-striped">
                             <thead class="thead-dark">
-                            <tr>
-                                <th>Stage</th>
-                                <th>Temperature</th>
-                                <th>Duration</th>
-                            </tr>
+                                <tr>
+                                    <th>Stage</th>
+                                    <th>Temperature</th>
+                                    <th>Duration</th>
+                                </tr>
                             </thead>
                             <tbody>
                             {% for mash in recipe.mash %}
@@ -71,7 +71,31 @@
                             </tbody>
                         </table>
                     </div>
+
+                    <div class="col-md-12">
+                        <h3>Other</h3>
+                        <table class="table table-striped">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Amount</th>
+                                    <th>Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for r in recipe.other %}
+                                <tr>
+                                    <td>{{ r.name }}</td>
+                                    <td>{{ r.amount }}</td>
+                                    <td>{{ r.time }}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
+
             </div>
 
             <div class="col-md-6">
@@ -94,14 +118,24 @@
                                 {{ recipe.before_boil }} L
                             </td>
                         </tr>
+
+                        <tr>
+                            <td><b>Estimated OG</b></td>
+                            <td>{{ recipe.estimated_og }}</td>
+                        </tr>
+
+                        <tr>
+                            <td><b>Estimated FG</b></td>
+                            <td>{{ recipe.estimated_fg }}</td>
+                        </tr>
                     </tbody>
                 </table>
 
-                {% if recipe.other %}
+                {% if recipe.comment %}
                     <h3>Brewers comments</h3>
                     <br>
                     <div>
-                        {{ recipe.other }}
+                        {{ recipe.comment }}
                     </div>
                 {% endif %}
 

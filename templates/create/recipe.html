@@ -10,6 +10,7 @@
             <input type="hidden" id="no_hops" name="no_hops" value="1">
             <input type="hidden" id="no_mash" name="no_mash" value="1">
             <input type="hidden" id="no_malts" name="no_malts" value="1">
+            <input type="hidden" id="no_other" name="no_other" value="0">
             <div class="row">
                 <div class="col-md-12">
                     <h3>Hops</h3>
@@ -88,6 +89,21 @@
                     </table>
                 </div>
                 <div class="col-md-12">
+                    <h3>Other</h3>
+                    <table class="table table-striped">
+                        <thead class="thead-dark">
+                        <tr>
+                            <th>Ingredient</th>
+                            <th>Amount</th>
+                            <th>When</th>
+                            <th class="add_row_btn"><i class="bi bi-plus-circle" id="add_other"></i></th>
+                        </tr>
+                        </thead>
+                        <tbody id="other">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-12">
                     <h2>Other Parameters</h2>
                     <table class="table table-striped">
                         <tbody>
@@ -104,15 +120,25 @@
                                     <label>Yeast</label>
                                 </td>
                                 <td>
-                                    <input type="text" name="yeast" placeholder="Fermentis Safale US-05" class="form-control" required>
+                                    <input type="text" name="yeast" placeholder="e.g Fermentis Safale US-05" class="form-control" required>
                                 </td>
+                            </tr>
+
+                            <tr>
+                                <td>Estimated OG</td>
+                                <td><input type="number" name="estimated_og" placeholder="e.g 50" required></td>
+                            </tr>
+
+                            <tr>
+                                <td>Estimated FG</td>
+                                <td><input type="number" name="estimated_fg" placeholder="e.g 50" required></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
             <div class="col-md-12">
-                <textarea name="other" placeholder="Anything other?" class="form-control"></textarea>
+                <textarea name="comment" placeholder="Anything other?" class="form-control"></textarea>
                 <br>
             </div>
             <div class="col-md-12">
@@ -126,6 +152,7 @@
     var no_hops = 1;
     var no_malts = 1;
     var no_mash = 1;
+    var no_other = 0;
 
     $(document).ready(function() {
         $("#add_hop").click(function() {
@@ -142,6 +169,12 @@
             $("#mash").append("<tr><td><input type='text' name='mash[]' placeholder='E.g Mash in' class='form-control form-control-sm' required></td><td><input type='number' name='mash_temp[]' placeholder='00' class='form-control form-control-sm' required></td><td><input type='number' name='mash_duration[]' placeholder='00' class='form-control form-control-sm' required></td></tr>");
             $("#no_mash").val(++no_mash);
         });
+
+        $("#add_other").click(function() {
+            $("#other").append("<tr><td><input type='text' name='other_name[]' placeholder='E.g Protafloc' class='form-control form-control-sm' required></td><td><input type='number' name='other_amount[]' placeholder='0g' class='form-control form-control-sm' required></td><td><input type='text' name='other_time[]' placeholder='00' class='form-control form-control-sm' required></td></tr>");
+            $("#no_other").val(++no_other);
+        });
+
     });
 </script>
 {% endblock content %}
