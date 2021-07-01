@@ -4,47 +4,58 @@
 <div class="row">
     <div class="col-md-10">
       <h1>Brews</h1>
+        {% if not brews.items %}
+          <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">No brews</h4>
+            <p>
+              You have not created any brews yet, to create one start by adding a recipe <a href="{{ url_for('create_recipe') }}">here</a>!<br>
+              When you're done go to the <a href="{{ url_for('recipes') }}">Recipes view</a> and choose brew.
+            </p>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        {% endif %}
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Brew ID</th>
+              <th>Recipe</th>
+              <th>Date Brewed</th>
+              <th>OG</th>
+              <th>FG</th>
+              <th>Abv</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for brew in brews.items %}
+            <tr>
+              <td><a href="/brew/edit/{{ brew[0].id }}">#{{ brew[0].id }}</a></td>
+              <td><a href="/recipe/{{ brew[1].id }}">{{ brew[1].name }}</a></td>
+              <td>{{ brew[0].brew_day }}</td>
+              <td>{{ brew[0].brew_og }}</td>
+              <td>{{ brew[0].brew_fg }}</td>
+              <td>{% if brew[0].brew_fg %} {{ ((brew[0].brew_og - brew[0].brew_fg) / 7.62) | round(2) }} %  {% else %} Not Available {% endif %}</td>
+              <td>Ferment until {{ brew[0].brew_done_ferm }}</td>
 
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Brew ID</th>
-            <th>Recipe</th>
-            <th>Date Brewed</th>
-            <th>OG</th>
-            <th>FG</th>
-            <th>Abv</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for brew in brews.items %}
-          <tr>
-            <td><a href="/brew/edit/{{ brew[0].id }}">#{{ brew[0].id }}</a></td>
-            <td><a href="/recipe/{{ brew[1].id }}">{{ brew[1].name }}</a></td>
-            <td>{{ brew[0].brew_day }}</td>
-            <td>{{ brew[0].brew_og }}</td>
-            <td>{{ brew[0].brew_fg }}</td>
-            <td>{% if brew[0].brew_fg %} {{ ((brew[0].brew_og - brew[0].brew_fg) / 7.62) | round(2) }} %  {% else %} Not Available {% endif %}</td>
-            <td>Ferment until {{ brew[0].brew_done_ferm }}</td>
-
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-      <nav aria-label="Pagination" class="pull-right">
-        <ul class="pagination">
-            <li class="page-item"><a class="page-link {% if brews.page == 1 %}disabled{% endif %}" href="{{ url_for('brews', page=brews.prev_num) }}">Previous</a></li>
-            {% for page_num in brews.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-              {% if page_num  %}
-                  <li class="page-item"><a class="page-link" href="{{ url_for('brews', page=page_num) }}">{{ page_num }}</a></li>
-              {% else %}
-                <li class="page-item active"><a class="page-link" href="{{ url_for('brews', page=page_num) }}">{{ page_num }}</a></li>
-              {% endif %}
+            </tr>
             {% endfor %}
-          <li class="page-item"><a class="page-link {% if brews.page == brews.pages %}disabled{% endif %}" href="{{ url_for('brews', page=brews.next_num) }}">Next</a></li>
-        </ul>
-      </nav>
+          </tbody>
+        </table>
+        <nav aria-label="Pagination" class="pull-right">
+          <ul class="pagination">
+              <li class="page-item"><a class="page-link {% if brews.page == 1 %}disabled{% endif %}" href="{{ url_for('brews', page=brews.prev_num) }}">Previous</a></li>
+              {% for page_num in brews.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                {% if page_num  %}
+                    <li class="page-item"><a class="page-link" href="{{ url_for('brews', page=page_num) }}">{{ page_num }}</a></li>
+                {% else %}
+                  <li class="page-item"><a class="page-link" href="{{ url_for('brews', page=page_num) }}">{{ page_num }}</a></li>
+                {% endif %}
+              {% endfor %}
+            <li class="page-item"><a class="page-link {% if brews.page == brews.pages %}disabled{% endif %}" href="{{ url_for('brews', page=brews.next_num) }}">Next</a></li>
+          </ul>
+        </nav>
     </div>
 </div>
 {% endblock content %}
