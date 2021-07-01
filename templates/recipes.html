@@ -41,7 +41,7 @@
               <td>{{ ((recipe.estimated_og - recipe.estimated_fg) / 7.62) | round(2) }}%</td>
               <td>
                 <a class="btn btn-success btn-sm" href="/recipe/{{ recipe.id }}">View</a>
-                <a class="btn btn-primary btn-sm" href="/brew/recipe/{{ recipe.id }}">Brew</a>
+                <a class="btn btn-primary btn-sm" href="/brew/recipe/{{ recipe.id }}">Make a brew from this recipe</a>
               </td>
             </tr>
           {% endfor %}
