@@ -196,6 +196,7 @@ def modify_brew() -> redirect:
 def brews() -> render_template:
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 10, type=int)
+    today = datetime.now().date()
     brews = db.session.query(Brew, Recipe).join(Recipe).filter(Brew.recipe_id == Recipe.id).\
         order_by(Brew.brew_day.desc()).paginate(page=page, per_page=per_page)
-    return render_template('brews.html', brews=brews)
+    return render_template('brews.html', brews=brews, today=today)
