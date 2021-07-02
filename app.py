@@ -43,13 +43,13 @@ def recipes():
 
 
 @app.route('/recipe/delete/<int:id>')
-def delete_recipe(id):
+def delete_recipe(id) -> redirect:
     recipe = Recipe.query.get_or_404(id)
     try:
         db.session.delete(recipe)
         db.session.commit()
-    except sqlalchemy.exc as e:
-        print("error {}".format(e))
+    except sqlalchemy.exc:
+        flash("Database error, could not delete")
     finally:
         return redirect('/recipes')
 
@@ -179,26 +179,25 @@ def edit_brew(id) -> render_template:
 
 @app.route('/brew/edit', methods=['POST'])
 def modify_brew() -> redirect:
-    if request.method == 'POST':
+    try:
         brew_id = request.form['brew_id']
         brew_og = request.form['brew_og']
         brew_fg = request.form['brew_fg']
         brew_done_ferm = datetime.strptime(request.form['brew_done_ferm'], '%Y-%m-%d')
         brew_day = datetime.strptime(request.form['brew_day'], '%Y-%m-%d')
 
-        brew = Brew.query.get_or_404(brew_id)
+        brew = Brew.query.get(brew_id)
         brew.brew_og = brew_og
         brew.brew_fg = brew_fg
         brew.brew_done_ferm = brew_done_ferm
         brew.brew_day = brew_day
 
-        try:
-            db.session.add(brew)
-            db.session.commit()
-        except Exception as e:
-            print(e)
-        finally:
-            return redirect('/brews')
+        db.session.add(brew)
+        db.session.commit()
+    except Exception:
+        flash("Error modifying brew, please try again")
+    finally:
+        return redirect('/brews')
 
 
 @app.route('/')
