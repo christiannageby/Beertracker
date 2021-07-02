@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, flash
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import redirect
 
@@ -141,8 +141,8 @@ def brew_recipe(id) -> render_template:
 
 @app.route('/brew/create', methods=['POST'])
 def add_brew() -> redirect:
-    if request.method == 'POST':
-        recipe_id = request.form['recipe_id']
+    try:
+        recipe_id = int(request.form['recipe_id'])
         brew_day = datetime.strptime(request.form['brew_day'], '%Y-%m-%d')
         brew_og = request.form['brew_og']
         brew_fg = request.form['brew_fg']
@@ -150,14 +150,24 @@ def add_brew() -> redirect:
 
         brew_done_ferm = datetime.strptime(request.form['brew_done_ferm'], '%Y-%m-%d')
 
-        brew = Brew(recipe_id=recipe_id, brew_og=brew_og, brew_fg=brew_fg, brew_day=brew_day,
-                    brew_done_ferm=brew_done_ferm, brew_comment=brew_comment)
-        try:
-            db.session.add(brew)
-            db.session.commit()
-            return redirect('/brews')
-        except Exception as e:
-            return "Problem adding the brew to database: {}".format(e)
+        brew = Brew(
+            recipe_id=recipe_id,
+            brew_og=brew_og,
+            brew_fg=brew_fg,
+            brew_day=brew_day,
+            brew_done_ferm=brew_done_ferm,
+            brew_comment=brew_comment
+            )
+
+        db.session.add(brew)
+        db.session.commit()
+
+    except ValueError:
+        flash("Invalid input, try again later")
+    except SQLAlchemyError:
+        flash("Database error")
+    finally:
+        return redirect('/brews')
 
 
 @app.route('/brew/edit/<int:id>')
