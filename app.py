@@ -180,13 +180,17 @@ def edit_brew(id) -> render_template:
 @app.route('/brew/edit', methods=['POST'])
 def modify_brew() -> redirect:
     try:
-        brew_id = request.form['brew_id']
-        brew_og = request.form['brew_og']
-        brew_fg = request.form['brew_fg']
+        brew_id = int(request.form['brew_id'])
+        brew_og = int(request.form['brew_og'])
+        brew_fg = int(request.form['brew_fg'])
         brew_done_ferm = datetime.strptime(request.form['brew_done_ferm'], '%Y-%m-%d')
         brew_day = datetime.strptime(request.form['brew_day'], '%Y-%m-%d')
 
         brew = Brew.query.get(brew_id)
+
+        if brew is None:
+            raise sqlalchemy.orm.exc.NoResultFound()
+
         brew.brew_og = brew_og
         brew.brew_fg = brew_fg
         brew.brew_done_ferm = brew_done_ferm
@@ -194,8 +198,10 @@ def modify_brew() -> redirect:
 
         db.session.add(brew)
         db.session.commit()
-    except Exception:
-        flash("Error modifying brew, please try again")
+    except sqlalchemy.orm.exc.NoResultFound:
+        flash("Error modifying brew, invalid brew id")
+    except ValueError:
+        flash("Error modifying brew, invalid input")
     finally:
         return redirect('/brews')
 
