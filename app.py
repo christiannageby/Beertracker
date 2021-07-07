@@ -185,6 +185,7 @@ def modify_brew() -> redirect:
         brew_fg = int(request.form['brew_fg'])
         brew_done_ferm = datetime.strptime(request.form['brew_done_ferm'], '%Y-%m-%d')
         brew_day = datetime.strptime(request.form['brew_day'], '%Y-%m-%d')
+        brew_comment = request.form['brew_comment']
 
         brew = Brew.query.get(brew_id)
 
@@ -193,6 +194,7 @@ def modify_brew() -> redirect:
 
         brew.brew_og = brew_og
         brew.brew_fg = brew_fg
+        brew.brew_comment = brew_comment
         brew.brew_done_ferm = brew_done_ferm
         brew.brew_day = brew_day
 
