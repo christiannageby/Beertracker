@@ -121,10 +121,10 @@ def add_recipe() -> redirect:
         )
         db.session.add(new_recipe)
         db.session.commit()
-    except Exception as e:
-        return "{}".format(e)
-
-    return redirect("/recipes")
+    except ValueError:
+        flash("Could not add recipe due to invalid inputs")
+    finally:
+        return redirect("/recipes")
 
 
 @app.route('/recipe/<int:id>')
