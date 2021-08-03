@@ -42,18 +42,6 @@ def recipes():
     return render_template('recipes.html', recipes=recipes)
 
 
-@app.route('/recipe/delete/<int:id>')
-def delete_recipe(id) -> redirect:
-    recipe = Recipe.query.get_or_404(id)
-    try:
-        db.session.delete(recipe)
-        db.session.commit()
-    except sqlalchemy.exc:
-        flash("Database error, could not delete")
-    finally:
-        return redirect('/recipes')
-
-
 @app.route('/recipe/create', methods=['GET'])
 def create_recipe() -> render_template:
     return render_template('create/recipe.html')
