@@ -39,7 +39,7 @@ def recipes():
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 10, type=int)
     recipes = Recipe.query.paginate(per_page=per_page, page=page)
-    return render_template('recipes.html', recipes=recipes)
+    return render_template('recipes.html', recipes=recipes, per_page=per_page)
 
 
 @app.route('/recipe/create', methods=['GET'])
