@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{{ recipe.name }}
+
+{% for malt in recipe.malt %}
+    {{ malt.name }}
+    {{ malt.amount }}
+{% endfor %}
+
+{% for mash in recipe.mash %}
+    {{ mash.name }}
+    {{ mash.temp }}
+    {{ mash.duration }}
+{% endfor %}
+
+{% for hop in recipe.hops %}
+    {{ hop.name }}
+    {{ hop.amount }}
+    {{ hop.boil }}
+{% endfor %}
+
+{% for other in recipe.other %}
+    {{ other.name }}
+    {{ other.amount }}
+    {{ other.time }}
+{% endfor %}
+
+{{ recipe.yeast }}
+{{ recipe.before_boil }}
+{{ recipe.estimated_og }}
+{{ recipe.estimated_fg }}
+{{ ((recipe.estimated_og - recipe.estimated_fg) / 7.62) | round(2) }}%
+
+{% if recipe.comment %}
+    {{ recipe.comment }}
+{% endif %}
