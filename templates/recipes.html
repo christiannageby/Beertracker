@@ -9,12 +9,12 @@
         <div class="alert alert-danger" role="alert">
           <h4 class="alert-heading">No recipes!</h4>
           <p>
-            You have not created any recipes yet, to create one start by adding a recipe <a href="{{ url_for('create_recipe') }}">here</a>!<br>
+            You have not created any recipes yet, to create one start by adding a recipe <a href="{{ url_for('recipe_views.create_recipe') }}">here</a>!<br>
           </p>
         </div>
       {% endif %}
 
-      <p>This is the main CRUD for the recipes, to create a new recipe click <a href="{{ url_for('create_recipe') }}">here.</a></p>
+      <p>This is the main CRUD for the recipes, to create a new recipe click <a href="{{ url_for('recipe_views.create_recipe') }}">here.</a></p>
       <p>
         For the time being it is not possible to edit a recipe, due to my laziness and lack of time to build Beertracking applications.
         <br>
@@ -50,15 +50,15 @@
       <div class="row">
         <nav aria-label="Pagination" class="pull-right">
           <ul class="pagination">
-              <li class="page-item"><a class="page-link {% if recipes.page == 1 %}disabled{% endif %}" href="{{ url_for('recipes', page=recipes.prev_num) }}">Previous</a></li>
+              <li class="page-item"><a class="page-link {% if recipes.page == 1 %}disabled{% endif %}" href="{{ url_for('recipe_views.recipes', page=recipes.prev_num) }}">Previous</a></li>
               {% for page_num in recipes.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
                 {% if page_num == recipes.page  %}
-                    <li class="page-item active"><a class="page-link" href="{{ url_for('recipes', page=page_num) }}">{{ page_num }}</a></li>
+                    <li class="page-item active"><a class="page-link" href="{{ url_for('recipe_views.recipes', page=page_num) }}">{{ page_num }}</a></li>
                 {% else %}
-                  <li class="page-item"><a class="page-link" href="{{ url_for('recipes', page=page_num) }}">{{ page_num }}</a></li>
+                  <li class="page-item"><a class="page-link" href="{{ url_for('recipe_views.recipes', page=page_num) }}">{{ page_num }}</a></li>
                 {% endif %}
               {% endfor %}
-            <li class="page-item"><a class="page-link {% if recipes.page == recipes.pages %}disabled{% endif %}" href="{{ url_for('recipes', page=recipes.next_num) }}">Next</a></li>
+            <li class="page-item"><a class="page-link {% if recipes.page == recipes.pages %}disabled{% endif %}" href="{{ url_for('recipe_views.recipes', page=recipes.next_num) }}">Next</a></li>
           </ul>
         </nav>
 
