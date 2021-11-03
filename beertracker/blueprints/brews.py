@@ -2,9 +2,9 @@
 from datetime import datetime
 from flask import Blueprint, request, redirect, flash, render_template
 from sqlalchemy.exc import SQLAlchemyError, NoResultFound
-from models.brew import Brew
-from models.recipe import Recipe
-from shared import db
+from beertracker.models.brew import Brew
+from beertracker.models.recipe import Recipe
+from beertracker.shared import db
 
 brew_actions = Blueprint('brew_actions_views', __name__)
 

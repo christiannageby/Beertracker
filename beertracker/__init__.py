@@ -1,8 +1,8 @@
 """Main application document for importing all models and blueprints"""
 from flask import Flask
-from shared import db
-from blueprints.recipes import recipe_actions
-from blueprints.brews import brew_actions
+from beertracker.shared import db
+from beertracker.blueprints.recipes import recipe_actions
+from beertracker.blueprints.brews import brew_actions
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')

@@ -1,4 +1,4 @@
-from shared import db
+from beertracker.shared import db
 
 class Brew(db.Model):
     id = db.Column(db.Integer, primary_key=True)
