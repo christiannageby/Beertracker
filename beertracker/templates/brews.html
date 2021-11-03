@@ -8,8 +8,8 @@
           <div class="alert alert-danger" role="alert">
             <h4 class="alert-heading">No brews</h4>
             <p>
-              You have not created any brews yet, to create one start by adding a recipe <a href="{{ url_for('create_recipe') }}">here</a>!<br>
-              When you're done go to the <a href="{{ url_for('recipes') }}">Recipes view</a> and choose brew.
+              You have not created any brews yet, to create one start by adding a recipe <a href="{{ url_for('recipe_actions.create_recipe') }}">here</a>!<br>
+              When you're done go to the <a href="{{ url_for('recipe_actions.recipes') }}">Recipes view</a> and choose brew.
             </p>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
@@ -56,15 +56,15 @@
         </table>
         <nav aria-label="Pagination" class="pull-right">
           <ul class="pagination">
-              <li class="page-item"><a class="page-link {% if brews.page == 1 %}disabled{% endif %}" href="{{ url_for('brew_actions_views.brews', page=brews.prev_num) }}">Previous</a></li>
+              <li class="page-item"><a class="page-link {% if brews.page == 1 %}disabled{% endif %}" href="{{ url_for('brew_actions.brews', page=brews.prev_num) }}">Previous</a></li>
               {% for page_num in brews.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
                 {% if page_num == brews.page  %}
-                  <li class="page-item active"><a class="page-link" href="{{ url_for('brew_actions_views.brews', page=page_num) }}">{{ page_num }}</a></li>
+                  <li class="page-item active"><a class="page-link" href="{{ url_for('brew_actions.brews', page=page_num) }}">{{ page_num }}</a></li>
                 {% else %}
-                  <li class="page-item"><a class="page-link" href="{{ url_for('brew_actions_views.brews', page=page_num) }}">{{ page_num }}</a></li>
+                  <li class="page-item"><a class="page-link" href="{{ url_for('brew_actions.brews', page=page_num) }}">{{ page_num }}</a></li>
                 {% endif %}
               {% endfor %}
-            <li class="page-item"><a class="page-link {% if brews.page == brews.pages %}disabled{% endif %}" href="{{ url_for('brew_actions_views.brews', page=brews.next_num) }}">Next</a></li>
+            <li class="page-item"><a class="page-link {% if brews.page == brews.pages %}disabled{% endif %}" href="{{ url_for('brew_actions.brews', page=brews.next_num) }}">Next</a></li>
           </ul>
         </nav>
     </div>

@@ -6,7 +6,7 @@ from beertracker.models.brew import Brew
 from beertracker.models.recipe import Recipe
 from beertracker.shared import db
 
-brew_actions = Blueprint('brew_actions_views', __name__)
+brew_actions = Blueprint('brew_actions', __name__)
 
 @brew_actions.route('/brew/create', methods=['POST'])
 def add_brew() -> redirect:

@@ -9,3 +9,5 @@ app.config.from_pyfile('config.py')
 app.register_blueprint(recipe_actions)
 app.register_blueprint(brew_actions)
 db.init_app(app)
+with app.app_context():
+    db.create_all()
