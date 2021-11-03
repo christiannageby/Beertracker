@@ -1,17 +1,16 @@
-# Beertracker 2.0
-This is a simple webapp for keeping track of your homebrewed beer.
-The Beertracker 2.0 originated from a Google Spreadsheets document which wasn't sufficient for keeping track of multiple recipes.
-
-The Beertracker uses SQLAlchemy and Flask to serve a WSGI application which can be installed almost evrywhere with Virtual Envinronment.
+# Beertracker
+The Beertracker is an application for keeping track of home-brewed beer, you can manage different brews and recipes. You can also keep track of which bottle is which brew(Just mark them with the brew-id).
+As for some history the Beertracker it originated from a Google Sheets document which was really cumbersome to manage.
 
 ## Installation
 To install the program start by copy the config.py.sample file to config.py. 
 Modify the settings and choose the database driver, for not so tech savy persons the default URI should be enough.
 
-To create the database and tables run python and issue this set of commands 
+To create the database and tables run python console in the root of this repository and issue the following commands.
+ 
 ```python
-from beertracker import Recipe, Brew, db
+from beertracker import db
 db.create_all()
 ```
 
-once it is done you're ready to start tracking your homebrewed beer
+To run this application i production you should run a dedicated wsgi-gateway but for testing purposes you can use `python run.py` to run the app within a development server on port 5000.
