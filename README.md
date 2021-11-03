@@ -10,7 +10,7 @@ Modify the settings and choose the database driver, for not so tech savy persons
 
 To create the database and tables run python and issue this set of commands 
 ```python
-from app import Recipe, Brew, db
+from beertracker import Recipe, Brew, db
 db.create_all()
 ```
 
