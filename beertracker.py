@@ -1,38 +1,16 @@
 from datetime import datetime
 from flask import Flask, render_template, request, flash
-from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import redirect
+from shared import db
+from models.recipe import Recipe
+from models.brew import Brew
+
 
 import sqlalchemy.exc
 
 app = Flask(__name__)
 app.config.from_pyfile('config.py')
-db = SQLAlchemy(app)
-
-
-class Recipe(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255), nullable=False)
-    estimated_og = db.Column(db.Integer, nullable=False)
-    estimated_fg = db.Column(db.Integer, nullable=True)
-    malt = db.Column(db.JSON(), nullable=False)
-    hops = db.Column(db.JSON(), nullable=False)
-    mash = db.Column(db.JSON(), nullable=False)
-    other = db.Column(db.JSON(), nullable=True)
-    before_boil = db.Column(db.Integer, nullable=False)
-    yeast = db.Column(db.String(255), nullable=False)
-    comment = db.Column(db.Text)
-
-
-class Brew(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    recipe_id = db.Column(db.Integer, db.ForeignKey('recipe.id'), nullable=False)
-    brew_og = db.Column(db.Integer, nullable=False)
-    brew_fg = db.Column(db.Integer, nullable=True)
-    brew_day = db.Column(db.Date, nullable=False)
-    brew_done_ferm = db.Column(db.Date, nullable=False)
-    brew_comment = db.Column(db.Text)
-
+db.init_app(app)
 
 @app.route('/recipes')
 def recipes():
