@@ -1,4 +1,5 @@
 from flask import Flask, Blueprint, request, redirect, flash, render_template
+from sqlalchemy.exc import SQLAlchemyError, NoResultFound
 from models.brew import Brew
 from models.recipe import Recipe
 from shared import db
@@ -57,7 +58,7 @@ def modify_brew() -> redirect:
         brew = Brew.query.get(brew_id)
 
         if brew is None:
-            raise sqlalchemy.orm.exc.NoResultFound()
+            raise NoResultFound()
 
         brew.brew_og = brew_og
         brew.brew_fg = brew_fg
@@ -67,7 +68,7 @@ def modify_brew() -> redirect:
 
         db.session.add(brew)
         db.session.commit()
-    except sqlalchemy.orm.exc.NoResultFound:
+    except NoResultFound:
         flash("Error modifying brew, invalid brew id")
     except ValueError:
         flash("Error modifying brew, invalid input")
