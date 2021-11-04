@@ -80,7 +80,7 @@ def add_recipe() -> redirect:
         db.session.add(new_recipe)
         db.session.commit()
     except ValueError:
-        flash("Could not add recipe due to invalid inputs")
+        flash("The recipe could not be created due to invalid inputs.")
     finally:
         return redirect("/recipes")
 
