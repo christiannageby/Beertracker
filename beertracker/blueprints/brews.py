@@ -46,12 +46,12 @@ def edit_brew(brew_id: int) -> render_template:
 @brew_actions.route('/brew/edit', methods=['POST'])
 def modify_brew() -> redirect:
     try:
-        brew_id = int(request.form['brew_id'])
-        brew_og = int(request.form['brew_og'])
-        brew_fg = int(request.form['brew_fg'])
-        brew_done_ferm = datetime.strptime(request.form['brew_done_ferm'], '%Y-%m-%d')
-        brew_day = datetime.strptime(request.form['brew_day'], '%Y-%m-%d')
-        brew_comment = request.form['brew_comment']
+        brew_id: int = request.form['brew_id']
+        brew_og: int = request.form['brew_og']
+        brew_fg: int = request.form['brew_fg']
+        brew_done_fermenting: datetime = datetime.strptime(request.form['brew_done_ferm'], '%Y-%m-%d')
+        brew_day: datetime = datetime.strptime(request.form['brew_day'], '%Y-%m-%d')
+        brew_comment: str = request.form['brew_comment']
 
         brew = Brew.query.get(brew_id)
 
@@ -61,7 +61,7 @@ def modify_brew() -> redirect:
         brew.brew_og = brew_og
         brew.brew_fg = brew_fg
         brew.brew_comment = brew_comment
-        brew.brew_done_fermenting = brew_done_ferm
+        brew.brew_done_fermenting = brew_done_fermenting
         brew.brew_day = brew_day
 
         db.session.add(brew)
