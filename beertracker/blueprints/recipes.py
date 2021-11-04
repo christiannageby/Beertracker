@@ -85,13 +85,13 @@ def add_recipe() -> redirect:
         return redirect("/recipes")
 
 
-@recipe_actions.route('/recipe/<int:id>')
-def recipe(id) -> render_template:
-    recipe = Recipe.query.get_or_404(id)
+@recipe_actions.route('/recipe/<int:recipe_id>')
+def recipe(recipe_id: int) -> render_template:
+    recipe = Recipe.query.get_or_404(recipe_id)
     return render_template('recipe.html', recipe=recipe)
 
 
-@recipe_actions.route('/brew/recipe/<int:id>')
-def brew_recipe(id) -> render_template:
-    recipe = Recipe.query.get_or_404(id)
+@recipe_actions.route('/brew/recipe/<int:recipe_id>')
+def brew_recipe(recipe_id: int) -> render_template:
+    recipe = Recipe.query.get_or_404(recipe_id)
     return render_template('create/brew.html', recipe=recipe)
