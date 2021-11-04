@@ -29,9 +29,9 @@ def add_brew() -> redirect:
         db.session.add(brew)
         db.session.commit()
     except ValueError:
-        flash("Invalid input, try again later")
+        flash("The brew could not be created, the input seems to be invalid please try again")
     except SQLAlchemyError:
-        flash("Database error")
+        flash("The brew could not be created due to a unexpected problem with the database")
     finally:
         return redirect('/brews')
 
@@ -67,9 +67,9 @@ def modify_brew() -> redirect:
         db.session.add(brew)
         db.session.commit()
     except NoResultFound:
-        flash("Error modifying brew, invalid brew id")
+        flash("The brew could not be updated because it is not found.")
     except ValueError:
-        flash("Error modifying brew, invalid input")
+        flash("The brew could not be updated, the input seems to be invalid please try again")
     finally:
         return redirect('/brews')
 
