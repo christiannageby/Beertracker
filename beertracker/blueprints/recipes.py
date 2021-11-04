@@ -4,6 +4,7 @@ from beertracker.shared import db
 
 recipe_actions = Blueprint('recipe_actions', __name__)
 
+
 @recipe_actions.route('/recipes')
 def recipes():
     page = request.args.get('page', 1, type=int)
@@ -37,14 +38,16 @@ def add_recipe() -> redirect:
     mash_stages = request.form.getlist('mash[]')
     mash_temps = request.form.getlist('mash_temp[]')
     mash_durations = request.form.getlist('mash_duration[]')
-    mash_ok = no_mash == len(mash_stages) and no_mash == len(mash_temps) and no_mash == len(mash_durations)
+    mash_ok = no_mash == len(mash_stages) and no_mash == len(mash_temps) and no_mash == len(
+        mash_durations)
 
     other = []
     no_other = int(request.form.get('no_other'))
     other_name = request.form.getlist('other_name[]')
     other_amount = request.form.getlist('other_amount[]')
     other_time = request.form.getlist('other_time[]')
-    other_ok = no_other == len(other_name) and no_other == len(other_amount) and no_other == len(other_name)
+    other_ok = no_other == len(other_name) and no_other == len(other_amount) and no_other == len(
+        other_name)
 
     before_boil = request.form.get('before_boil')
     estimated_og = request.form.get('estimated_og')
@@ -59,10 +62,10 @@ def add_recipe() -> redirect:
         for i in range(no_malt):
             malt.append({"name": malt_names[i], "amount": malt_amount[i]})
         for i in range(no_mash):
-            mash.append({"name": mash_stages[i], "temp": mash_temps[i], "duration": mash_durations[i]})
+            mash.append(
+                {"name": mash_stages[i], "temp": mash_temps[i], "duration": mash_durations[i]})
         for i in range(no_other):
             other.append({"name": other_name[i], "amount": other_amount[i], "time": other_time[i]})
-
 
     try:
         new_recipe = Recipe(
