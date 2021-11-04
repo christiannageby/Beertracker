@@ -21,20 +21,20 @@ def create_recipe() -> render_template:
 @recipe_actions.route('/recipe/create', methods=['POST'])
 def add_recipe() -> redirect:
     hops = []
-    no_hops = int(request.form.get('no_hops'))
+    no_hops: int = int(request.form.get('no_hops'))
     hop_names = request.form.getlist('hop[]')
     hop_amount = request.form.getlist('hop_amount[]')
     hop_boil = request.form.getlist('hop_boil[]')
     hops_ok = no_hops == len(hop_names) and no_hops == len(hop_amount) and no_hops == len(hop_boil)
 
     malt = []
-    no_malt = int(request.form.get('no_malts'))
+    no_malt: int = int(request.form.get('no_malts'))
     malt_names = request.form.getlist('malt[]')
     malt_amount = request.form.getlist('malt_amount[]')
     malts_ok = no_malt == len(malt_names) and no_malt == len(malt_amount)
 
     mash = []
-    no_mash = int(request.form.get('no_mash'))
+    no_mash: int = int(request.form.get('no_mash'))
     mash_stages = request.form.getlist('mash[]')
     mash_temps = request.form.getlist('mash_temp[]')
     mash_durations = request.form.getlist('mash_duration[]')
@@ -42,7 +42,7 @@ def add_recipe() -> redirect:
         mash_durations)
 
     other = []
-    no_other = int(request.form.get('no_other'))
+    no_other: int = int(request.form.get('no_other'))
     other_name = request.form.getlist('other_name[]')
     other_amount = request.form.getlist('other_amount[]')
     other_time = request.form.getlist('other_time[]')
