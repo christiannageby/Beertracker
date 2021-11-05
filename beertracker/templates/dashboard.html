@@ -44,6 +44,40 @@
           {% endfor %}
         </tbody>
       </table>
+      <h2>Interesting facts</h2>
+      <canvas id="brew_chart"></canvas>
+      <script>
+      const ctx = document.getElementById('brew_chart').getContext('2d');
+      const brew_chart = new Chart(ctx, {
+          type: 'line',
+          data: {
+              labels: [
+                {% for e in monthly_chart %}
+                  '{{ e[0] }}',
+                {% endfor %}
+              ],
+              datasets: [{
+                  label: 'Brews per month',
+                  data: [
+                    {% for e in monthly_chart %}
+                      '{{ e[1] }}',
+                    {% endfor %}
+                  ],
+                  borderWidth: 1,
+                  backgroundColor: '#dc3545',
+                  borderColor: '#dc3545',
+              }]
+          },
+          options: {
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              }
+          }
+      });
+      </script>
+
     </div>
     <div class="col-md-3">
       <div class="row">
