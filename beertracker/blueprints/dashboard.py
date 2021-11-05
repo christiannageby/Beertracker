@@ -13,5 +13,5 @@ dashboard_actions = Blueprint('dashboard_actions', __name__)
 def dashboard() -> render_template:
     brews_per_month = db.session.query(func.strftime('%Y-%m', Brew.brew_day), func.avg(Brew.id)).group_by(func.strftime('%m', Brew.brew_day)).limit(12).all()
     today = datetime.now().date()
-    fermenting_brews = db.session.query(Brew, Recipe).join(Recipe).filter(Brew.recipe_id == Recipe.id and today >= Brew.brew_done_ferm).order_by(Brew.brew_day.desc())
+    fermenting_brews = db.session.query(Brew, Recipe).filter(Brew.brew_day >= today).join(Recipe).filter(Brew.recipe_id == Recipe.id).order_by(Brew.brew_day.desc())
     return render_template('dashboard.html', fermenting_brews=fermenting_brews, today=today, monthly_chart=brews_per_month)
