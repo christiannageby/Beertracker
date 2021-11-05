@@ -83,12 +83,20 @@
       <div class="row">
         <h2>Quick search</h2>
         <form action="brew/find" method="POST">
-          <p>If you're curious about a specified brew for excample one that you have found in the garage under a large pile of junk, enter the brew ID here and press return. You'll be showed the recipe and the parameters for that beer</p>
+          <p>
+            If you're curious about a specified brew for example one that you have found in the garage under a large pile of junk, enter the brew ID here and press return.
+            You'll be showed the recipe and the parameters for that beer.
+          </p>
           <div class="input-group mb-2">
             <div class="input-group-prepend">
               <div class="input-group-text">#</div>
             </div>
             <input type="number" class="form-control" name="brew_id" placeholder="e.g 13" required>
+            <div class="input-group-append">
+              <button class="btn btn-success" type="submit">
+                <i class="bi bi-search"></i>
+              </button>
+            </div>
           </div>
         </form>
       </div>
