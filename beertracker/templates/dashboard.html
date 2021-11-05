@@ -27,7 +27,7 @@
             <td>{{ fermenting_brew[0].brew_done_ferm }}</td>
             <td>{{ fermenting_brew[0].brew_og }}</td>
             <td>{{ fermenting_brew[0].brew_fg }}</td>
-            <td>{% if fermenting_brew[0].brew_fg %} {{ ((fermenting_brew[0].brew_og - fermenting_brew[0].brew_fg) / 7.62) | round(2) }} %  {% else %} Not Available {% endif %}</td>
+            <td>{% if fermenting_brew.Brew.brew_fg %} {{ ((fermenting_brew.Brew.brew_og - fermenting_brew.Brew.brew_fg) / 7.62) | round(2) }} {% else %} est. {{ ((fermenting_brew.Recipe.estimated_og - fermenting_brew.Recipe.estimated_fg) / 7.62) | round(2) }} {% endif %} %</td>
             <td>
               {% set factor = (today - fermenting_brew[0].brew_day).days / (fermenting_brew[0].brew_done_ferm - fermenting_brew[0].brew_day).days %}
               {% if factor >= 1 %}
