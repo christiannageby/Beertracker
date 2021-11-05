@@ -31,12 +31,12 @@
           <tbody>
             {% for brew in brews.items %}
             <tr>
-              <td><a href="/brew/edit/{{ brew[0].id }}">#{{ brew[0].id }}</a></td>
-              <td><a href="/recipe/{{ brew[1].id }}">{{ brew[1].name }}</a></td>
-              <td>{{ brew[0].brew_day }}</td>
-              <td>{{ brew[0].brew_og }}</td>
-              <td>{{ brew[0].brew_fg }}</td>
-              <td>{% if brew[0].brew_fg %} {{ ((brew[0].brew_og - brew[0].brew_fg) / 7.62) | round(2) }} %  {% else %} Not Available {% endif %}</td>
+              <td><a href="/brew/edit/{{ brew.Brew.id }}">#{{ brew.Brew.id }}</a></td>
+              <td><a href="/recipe/{{ brew[1].id }}">{{ brew.Recipe.name }}</a></td>
+              <td>{{ brew.Brew.brew_day }}</td>
+              <td>{{ brew.Brew.brew_og }}</td>
+              <td>{{ brew.Brew.brew_fg }}</td>
+              <td>{% if brew.Brew.brew_fg %} {{ ((brew.Brew.brew_og - brew.Brew.brew_fg) / 7.62) | round(2) }} %  {% else %} Not Available {% endif %}</td>
               <td>
                 {% set factor = (today - brew[0].brew_day).days / (brew[0].brew_done_ferm - brew[0].brew_day).days %}
                 {% if factor >= 1 %}
