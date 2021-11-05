@@ -1,12 +1,13 @@
 """Actions for brews"""
 from datetime import datetime
-from flask import Blueprint, request, redirect, flash, render_template
+from flask import Blueprint, request, redirect, flash, render_template, url_for
 from sqlalchemy.exc import SQLAlchemyError, NoResultFound
 from beertracker.models.brew import Brew
 from beertracker.models.recipe import Recipe
 from beertracker.shared import db
 
 brew_actions = Blueprint('brew_actions', __name__)
+
 
 @brew_actions.route('/brew/create', methods=['POST'])
 def add_brew() -> redirect:
@@ -25,7 +26,7 @@ def add_brew() -> redirect:
             brew_day=brew_day,
             brew_done_ferm=brew_done_ferm,
             brew_comment=brew_comment
-            )
+        )
         db.session.add(brew)
         db.session.commit()
     except ValueError:
@@ -49,7 +50,8 @@ def modify_brew() -> redirect:
         brew_id: int = request.form['brew_id']
         brew_og: int = request.form['brew_og']
         brew_fg: int = request.form['brew_fg']
-        brew_done_fermenting: datetime = datetime.strptime(request.form['brew_done_ferm'], '%Y-%m-%d')
+        brew_done_fermenting: datetime = datetime.strptime(request.form['brew_done_ferm'],
+                                                           '%Y-%m-%d')
         brew_day: datetime = datetime.strptime(request.form['brew_day'], '%Y-%m-%d')
         brew_comment: str = request.form['brew_comment']
 
@@ -74,12 +76,34 @@ def modify_brew() -> redirect:
         return redirect('/brews')
 
 
-@brew_actions.route('/')
 @brew_actions.route('/brews')
 def brews() -> render_template:
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 10, type=int)
     today = datetime.now().date()
-    all_brews = db.session.query(Brew, Recipe).join(Recipe).filter(Brew.recipe_id == Recipe.id).\
+    all_brews = db.session.query(Brew, Recipe).join(Recipe).filter(Brew.recipe_id == Recipe.id). \
         order_by(Brew.brew_day.desc()).paginate(page=page, per_page=per_page)
     return render_template('brews.html', brews=all_brews, today=today)
+
+
+@brew_actions.route('/brew/find', methods=['POST'])
+def find_brew() -> redirect:
+    brew_id: int = request.form['brew_id']
+    try:
+        brew = Brew.query.get(brew_id)
+
+        if brew is None:
+            raise NoResultFound()
+
+        return redirect(url_for('brew_actions.view_brew', brew_id=brew_id))
+    except NoResultFound:
+        flash("Invalid brew ID")
+
+    return redirect(url_for('dashboard_actions.dashboard'))
+
+
+@brew_actions.route('/brew/view/<int:brew_id>')
+def view_brew(brew_id: int) -> render_template:
+    display_brew = db.session.query(Brew, Recipe).filter(Brew.id == brew_id).join(Recipe).filter(
+        Brew.recipe_id == Recipe.id).first()
+    return render_template('brew.html', brew=display_brew)
