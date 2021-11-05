@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-9">
+      <h1>Welcome to Beertracker</h1>
+        <h2>Fermenting beers</h2>
+        <table class="table table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th>Brew ID</th>
+              <th>Recipe</th>
+              <th>Date Brewed</th>
+              <th>Fermenting done</th>
+              <th>OG</th>
+              <th>FG</th>
+              <th>Abv</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for fermenting_brew in fermenting_brews %}
+            <tr>
+              <td><a href="/brew/edit/{{ fermenting_brew[0].id }}">#{{ fermenting_brew[0].id }}</a></td>
+              <td><a href="/recipe/{{ fermenting_brew[1].id }}">{{ fermenting_brew[1].name }}</a></td>
+              <td>{{ fermenting_brew[0].brew_day }}</td>
+              <td>{{ fermenting_brew[0].brew_done_ferm }}</td>
+              <td>{{ fermenting_brew[0].brew_og }}</td>
+              <td>{{ fermenting_brew[0].brew_fg }}</td>
+              <td>{% if fermenting_brew[0].brew_fg %} {{ ((fermenting_brew[0].brew_og - fermenting_brew[0].brew_fg) / 7.62) | round(2) }} %  {% else %} Not Available {% endif %}</td>
+              <td>
+                {% set factor = (today - fermenting_brew[0].brew_day).days / (fermenting_brew[0].brew_done_ferm - fermenting_brew[0].brew_day).days %}
+                {% if factor >= 1 %}
+                  Drinkable
+                {% else %}
+                  <div class="progress">
+                    <div class="progress-bar {% if factor >= 1 %} bg-success {% endif %} " role="progressbar" style="width: {{ factor*100 }}%;" aria-valuenow="{{ factor*100 }}" aria-valuemin="0" aria-valuemax="100">
+                      {{ (factor*100) | round(0) }}%
+                    </div>
+                  </div>
+                {% endif %}
+              </td>
+
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+    </div>
+  <div class="col-md-3">
+    <div class="row">
+      <h2>Quick search</h2>
+      <form action="brew/find" method="POST">
+        <p>If you're curious about a specified brew for excample one that you have found in the garage under a large pile of junk, enter the brew ID here and press return. You'll be showed the recipe and the parameters for that beer</p>
+        <div class="input-group mb-2">
+          <div class="input-group-prepend">
+            <div class="input-group-text">#</div>
+          </div>
+          <input type="number" class="form-control" name="brew_id" placeholder="e.g 13" required>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock content %}
