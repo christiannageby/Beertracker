@@ -2,6 +2,7 @@
 from datetime import datetime
 from flask import Blueprint, request, redirect, flash, render_template, url_for
 from sqlalchemy.exc import SQLAlchemyError, NoResultFound
+from beertracker.models.error import FermentingDoneBeforeBrewError
 from beertracker.models.brew import Brew
 from beertracker.models.recipe import Recipe
 from beertracker.shared import db
@@ -19,6 +20,9 @@ def add_brew() -> redirect:
         brew_fg: int = request.form['brew_fg']
         brew_comment: str = request.form['brew_comment']
         brew_done_ferm: datetime = datetime.strptime(request.form['brew_done_ferm'], '%Y-%m-%d')
+        if brew_done_ferm < brew_day:
+            raise FermentingDoneBeforeBrewError
+
         brew = Brew(
             recipe_id=recipe_id,
             brew_og=brew_og,
@@ -31,6 +35,8 @@ def add_brew() -> redirect:
         db.session.commit()
     except ValueError:
         flash("The brew could not be created, the input seems to be invalid please try again")
+    except FermentingDoneBeforeBrewError:
+        flash("Moron! The brew must have been brewn before it is done fermenting.")
     except SQLAlchemyError:
         flash("The brew could not be created due to a unexpected problem with the database")
     finally:
