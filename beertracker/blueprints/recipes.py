@@ -54,7 +54,7 @@ def add_recipe() -> redirect:
     estimated_fg = request.form.get('estimated_fg')
     name = request.form.get('name')
     yeast = request.form.get('yeast')
-    comment = request.form.get('comment')
+    description = request.form.get('description')
 
     if hops_ok and malts_ok and mash_ok and other_ok:
         for i in range(no_hops):
@@ -78,7 +78,7 @@ def add_recipe() -> redirect:
             malt=malt,
             yeast=yeast,
             other=other,
-            comment=comment
+            description=description
         )
         db.session.add(new_recipe)
         db.session.commit()

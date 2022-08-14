@@ -11,4 +11,4 @@ class Recipe(db.Model):
     other = db.Column(db.JSON(), nullable=True)
     before_boil = db.Column(db.Integer, nullable=False)
     yeast = db.Column(db.String(255), nullable=False)
-    comment = db.Column(db.Text)
+    description = db.Column(db.Text)
