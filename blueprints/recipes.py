@@ -1,6 +1,6 @@
 from flask import Blueprint, request, redirect, flash, render_template
-from beertracker.models.recipe import Recipe
-from beertracker.shared import db
+from models.recipe import Recipe
+from shared import db
 
 recipe_actions = Blueprint('recipe_actions', __name__)
 
