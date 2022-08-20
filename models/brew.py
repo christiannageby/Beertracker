@@ -1,5 +1,5 @@
+"""Database model for brew"""
 from shared import db
-
 
 class Brew(db.Model):
     id = db.Column(db.Integer, primary_key=True)
