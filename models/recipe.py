@@ -1,7 +1,9 @@
+"""This file defines the Recipe class, to map in the database"""
 from shared import db
 
 
 class Recipe(db.Model):
+    """This class creates the database table as well as the object for describing a recipe"""
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)
     estimated_og = db.Column(db.Integer, nullable=False)
