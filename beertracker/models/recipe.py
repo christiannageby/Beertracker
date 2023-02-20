@@ -1,5 +1,5 @@
 """This file defines the Recipe class, to map in the database"""
-from shared import db
+from beertracker.shared import db
 
 
 class Recipe(db.Model):

@@ -1,5 +1,5 @@
 """This file defines the Brew class, to map in the database"""
-from shared import db
+from beertracker.shared import db
 
 class Brew(db.Model):
     """This class creates the database table as well as the object for describing a brew"""

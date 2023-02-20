@@ -3,9 +3,9 @@ from datetime import datetime
 from flask import Blueprint, render_template
 from sqlalchemy import func
 from sqlalchemy.exc import SQLAlchemyError, NoResultFound
-from models.brew import Brew
-from models.recipe import Recipe
-from shared import db
+from beertracker.models.brew import Brew
+from beertracker.models.recipe import Recipe
+from beertracker.shared import db
 
 dashboard_actions = Blueprint('dashboard_actions', __name__)
 
